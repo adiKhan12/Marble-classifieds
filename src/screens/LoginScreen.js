@@ -26,28 +26,18 @@ const CustomInput = ({ field, form, ...props }) => (
     </View>
 );
 
-<<<<<<< HEAD
 
 const handleLogin = async (values, { setSubmitting, setErrors }, navigation) => {
-=======
-const handleLogin = async (values, { setSubmitting, setErrors }) => {
->>>>>>> 2d34ae3c50fa33f9de1a1d618366ca98b77b4882
     try {
         const response = await axios.post('http://10.0.2.2:3000/login', values);
 
         if (response.data.token) {
             // Here, you can store the token and navigate the user to the main app:
-<<<<<<< HEAD
             AsyncStorage.setItem('userToken', response.data.token);
             // await AsyncStorage.setItem('@userToken', response.data.token);
             // navigation.navigate('MainAppScreen'); 
             // hy chat gpt here i f i write alert login success then it works  i am also getting correct response from backend but if i wrote navigation like below then it is not working
             navigation.navigate('SellerHome');
-=======
-            // await AsyncStorage.setItem('@userToken', response.data.token);
-            // navigation.navigate('MainAppScreen'); 
-            Alert.alert('Login Successful', 'You have logged in successfully!');
->>>>>>> 2d34ae3c50fa33f9de1a1d618366ca98b77b4882
         } else {
             setErrors({ email: 'Invalid credentials', password: 'Invalid credentials' });
         }
@@ -72,11 +62,7 @@ const LoginScreen = ({ navigation }) => {
             <Formik
                 initialValues={{ email: '', password: '' }}
                 validationSchema={LoginSchema}
-<<<<<<< HEAD
                 onSubmit={(values, formikBag) => handleLogin(values, formikBag, navigation)}
-=======
-                onSubmit={handleLogin}
->>>>>>> 2d34ae3c50fa33f9de1a1d618366ca98b77b4882
             >
                 {({ handleSubmit, isSubmitting }) => (
                     <>
