@@ -49,6 +49,12 @@ const handleRegistration = async (values, { setSubmitting, setErrors }) => {
 const RegisterScreen = () => {
     return (
         <View style={styles.container}>
+            {/* Logo Placeholder */}
+            <View style={styles.logoContainer}>
+                <View style={styles.logo}>
+                    <Text style={styles.logoText}>LOGO</Text>
+                </View>
+            </View>
             <Text style={styles.title}>Seller Registration</Text>
             <Formik
                 initialValues={{ email: '', password: '', confirmPassword: '' }}
@@ -61,6 +67,10 @@ const RegisterScreen = () => {
                         <Field name="password" placeholder="Password" secureTextEntry component={CustomInput} />
                         <Field name="confirmPassword" placeholder="Confirm Password" secureTextEntry component={CustomInput} />
                         <Button title="Register" onPress={handleSubmit} disabled={isSubmitting} />
+                        {/* Added Login Message */}
+                        <Text style={styles.loginText}>
+                            Already have an account? Login.
+                        </Text>
                     </>
                 )}
             </Formik>
@@ -73,17 +83,74 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         padding: 16,
+        backgroundColor: '#FAFAFA', // Light grayish-white for the background
     },
     title: {
-        fontSize: 24,
+        fontSize: 28,
+        fontWeight: 'bold',
         marginBottom: 20,
+        textAlign: 'center',
+        color: '#333333', // Dark Gray for Titles
     },
     input: {
-        height: 40,
-        borderColor: 'gray',
+        height: 50, // Increased height for a bigger touch area
+        backgroundColor: 'white',
+        borderRadius: 8, // Rounded Corners
+        borderColor: '#DDDDDD',
         borderWidth: 1,
-        marginBottom: 10,
-        paddingLeft: 8,
+        marginBottom: 15,
+        paddingLeft: 15,
+        elevation: 3, // Shadow for Android
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1, // Subtle shadow for iOS
+        shadowRadius: 2,
+    },
+    errorText: {
+        color: 'red',
+        fontSize: 12,
+        marginBottom: 5,
+    },
+    button: {
+        backgroundColor: '#2A2A2A', // Dark Gray for primary actions
+        borderRadius: 8,
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 10,
+        elevation: 3, // Shadow for Android
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2, // Shadow for iOS
+        shadowRadius: 2,
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    loginText: {
+        marginTop: 20,
+        textAlign: 'center',
+        color: '#666666',
+    },
+    // Logo styles (same as LoginScreen)
+    logoContainer: {
+        alignItems: 'center',
+        marginBottom: 50,
+    },
+    logo: {
+        width: 150,
+        height: 150,
+        backgroundColor: '#DDDDDD',
+        borderRadius: 75,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    logoText: {
+        color: '#2A2A2A',
+        fontSize: 18,
+        fontWeight: 'bold',
     },
 });
 

@@ -69,48 +69,48 @@ const AddProductScreen = () => {
 
     return (
         <View style={styles.container}>
-        <TextInput placeholder="Name" value={name} onChangeText={setName} style={styles.input} />
+            <TextInput placeholder="Name" value={name} onChangeText={setName} style={styles.input} />
 
-        <Picker
-            selectedValue={category}
-            onValueChange={(itemValue, itemIndex) => {
-                setCategory(itemValue);
-                setShowSubCategory(true);
-            }}>
-            <Picker.Item label="Select a category" value="" />
-            <Picker.Item label="Marbles" value="Marbles" />
-            <Picker.Item label="Granites" value="Granites" />
-        </Picker>
+            <Picker
+                selectedValue={category}
+                onValueChange={(itemValue, itemIndex) => {
+                    setCategory(itemValue);
+                    setShowSubCategory(true);
+                }}>
+                <Picker.Item label="Select a category" value="" />
+                <Picker.Item label="Marbles" value="Marbles" />
+                <Picker.Item label="Granites" value="Granites" />
+            </Picker>
 
-        {showSubCategory && (category === "Marbles" ? (
-            <Picker
-                selectedValue={marbleType}
-                onValueChange={setMarbleType}>
-                <Picker.Item label="Ziarat white" value="Ziarat white" />
-                <Picker.Item label="Ziarat white gray" value="Ziarat white gray" />
-                <Picker.Item label="Ziarat gray" value="Ziarat gray" />
-                <Picker.Item label="Badil" value="Badil" />
-                <Picker.Item label="Chetha white" value="Chetha white" />
-                <Picker.Item label="Silky" value="Silky" />
-                <Picker.Item label="Jet black" value="Jet black" />
-                <Picker.Item label="Sunny gray" value="Sunny gray" />
-                <Picker.Item label="Sunny white" value="Sunny white" />
-                <Picker.Item label="Red and white" value="Red and white" />
-                <Picker.Item label="Strawberry" value="Strawberry" />
-            </Picker>
-        ) : (
-            <Picker
-                selectedValue={marbleType}
-                onValueChange={setMarbleType}>
-                <Picker.Item label="Black granite" value="Black granite" />
-                <Picker.Item label="Trapical gray" value="Trapical gray" />
-                <Picker.Item label="Indus gold" value="Indus gold" />
-                <Picker.Item label="Imperial white" value="Imperial white" />
-                <Picker.Item label="Golden Jibrana" value="Golden Jibrana" />
-                <Picker.Item label="Black jibrana" value="Black jibrana" />
-                <Picker.Item label="Sado pink" value="Sado pink" />
-                <Picker.Item label="Sado gray" value="Sado gray" />
-            </Picker>
+            {showSubCategory && (category === "Marbles" ? (
+                <Picker
+                    selectedValue={marbleType}
+                    onValueChange={setMarbleType}>
+                    <Picker.Item label="Ziarat white" value="Ziarat white" />
+                    <Picker.Item label="Ziarat white gray" value="Ziarat white gray" />
+                    <Picker.Item label="Ziarat gray" value="Ziarat gray" />
+                    <Picker.Item label="Badil" value="Badil" />
+                    <Picker.Item label="Chetha white" value="Chetha white" />
+                    <Picker.Item label="Silky" value="Silky" />
+                    <Picker.Item label="Jet black" value="Jet black" />
+                    <Picker.Item label="Sunny gray" value="Sunny gray" />
+                    <Picker.Item label="Sunny white" value="Sunny white" />
+                    <Picker.Item label="Red and white" value="Red and white" />
+                    <Picker.Item label="Strawberry" value="Strawberry" />
+                </Picker>
+            ) : (
+                <Picker
+                    selectedValue={marbleType}
+                    onValueChange={setMarbleType}>
+                    <Picker.Item label="Black granite" value="Black granite" />
+                    <Picker.Item label="Trapical gray" value="Trapical gray" />
+                    <Picker.Item label="Indus gold" value="Indus gold" />
+                    <Picker.Item label="Imperial white" value="Imperial white" />
+                    <Picker.Item label="Golden Jibrana" value="Golden Jibrana" />
+                    <Picker.Item label="Black jibrana" value="Black jibrana" />
+                    <Picker.Item label="Sado pink" value="Sado pink" />
+                    <Picker.Item label="Sado gray" value="Sado gray" />
+                </Picker>
         ))}
 
         <TextInput placeholder="Description" value={description} onChangeText={setDescription} style={styles.input} />
@@ -118,11 +118,13 @@ const AddProductScreen = () => {
 
         <Button title="Select Image" onPress={selectImage} />
 
-        {imageResponse?.assets && imageResponse?.assets.map(({uri}, index) => (
-            <Image key={index} source={{ uri }} style={{ width: 100, height: 100 }} />
-        ))}
+        {imageResponse?.assets?.[0]?.uri && (
+            <Image source={{ uri: imageResponse.assets[0].uri }} style={styles.image} />
+        )}
 
-        <Button title="Add Product" onPress={handleAddProduct} />
+        <View style={styles.buttonContainer}>
+            <Button title="Add Product" onPress={handleAddProduct} />
+        </View>
     </View>
 
     );
@@ -130,36 +132,32 @@ const AddProductScreen = () => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        padding: 10,
-        backgroundColor: '#f2f2f2',
+      flex: 1,
+      padding: 16,
+      backgroundColor: '#f2f2f2',
     },
     input: {
-        padding: 10,
-        backgroundColor: '#fff',
-        marginBottom: 10,
-        borderRadius: 5,
+      padding: 10,
+      backgroundColor: '#fff',
+      marginBottom: 10,
+      borderRadius: 5,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 1 },
+      shadowOpacity: 0.2,
+      shadowRadius: 1,
+      elevation: 2,
     },
-    imageContainer: {
-        width: 120,  // Adjust as necessary
-        height: 120, // Adjust as necessary
-        borderRadius: 10,
-        borderWidth: 1,
-        borderColor: '#dcdcdc',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 10,
+    buttonContainer: {
+      marginVertical: 10,
     },
     image: {
-        width: '100%',
-        height: '100%',
-        borderRadius: 10,
+      width: 150,
+      height: 150,
+      borderRadius: 5,
+      marginVertical: 10,
+      alignSelf: 'center',
     },
-    placeholderText: {
-        color: '#a5a5a5',
-        textAlign: 'center',
-    },
-});
+  });
 
 
 export default AddProductScreen;

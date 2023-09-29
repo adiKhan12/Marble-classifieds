@@ -36,8 +36,7 @@ const handleLogin = async (values, { setSubmitting, setErrors }, navigation) => 
             AsyncStorage.setItem('userToken', response.data.token);
             // await AsyncStorage.setItem('@userToken', response.data.token);
             // navigation.navigate('MainAppScreen'); 
-            // hy chat gpt here i f i write alert login success then it works  i am also getting correct response from backend but if i wrote navigation like below then it is not working
-            navigation.navigate('SellerHome');
+            navigation.navigate('SellerDashboard');
         } else {
             setErrors({ email: 'Invalid credentials', password: 'Invalid credentials' });
         }
