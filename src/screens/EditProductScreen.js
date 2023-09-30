@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Button, StyleSheet, Image, Alert } from 'react-native';
+import { View, TextInput, Button, StyleSheet, Image, Alert, ScrollView } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { launchImageLibrary } from 'react-native-image-picker';
@@ -37,7 +37,7 @@ const EditProductScreen = ({ route, navigation }) => {
             formData.append('description', description);
             formData.append('category', category);
             formData.append('pricePerFoot', pricePerFoot);
-
+            formData.append('subCategory', marbleType);
             if (imageResponse?.assets?.[0]?.uri) {
                 formData.append('productImage', {
                   uri: imageResponse.assets[0].uri,
@@ -63,7 +63,7 @@ const EditProductScreen = ({ route, navigation }) => {
     };
 
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
             <TextInput value={name} onChangeText={setName} placeholder="Name" style={styles.input} />
 
             <Picker
@@ -116,16 +116,18 @@ const EditProductScreen = ({ route, navigation }) => {
                 <Image key={index} source={{ uri }} style={{ width: 100, height: 100 }} />
             ))}
             <Button title="Update Product" onPress={handleEdit} />
-        </View>
+        </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: '#f2f2f2',
+      },
+      contentContainer: {
         padding: 16,
-        justifyContent: 'center',
-    },
+      },
     input: {
         height: 40,
         borderColor: 'gray',

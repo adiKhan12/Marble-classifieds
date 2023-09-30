@@ -1,9 +1,10 @@
 //RegisterScreen.js
 import React from 'react';
 import axios from 'axios';
-import { View, Text, Button, StyleSheet, TextInput, Alert } from 'react-native';
+import { View, Text, Button, StyleSheet, TextInput, Alert, ScrollView, Image, TouchableOpacity } from 'react-native';
 import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
+const logo = require('../assets/logo.png'); // Adjust the path accordingly
 
 const RegisterSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Required'),
@@ -15,7 +16,7 @@ const RegisterSchema = Yup.object().shape({
 
 const CustomInput = ({ field, form, ...props }) => (
     <View style={{ marginBottom: 10 }}>
-        <TextInput 
+        <TextInput
             style={styles.input}
             onChangeText={form.handleChange(field.name)}
             onBlur={form.handleBlur(field.name)}
@@ -46,13 +47,13 @@ const handleRegistration = async (values, { setSubmitting, setErrors }) => {
     }
 };
 
-const RegisterScreen = () => {
+const RegisterScreen = ({ navigation }) => {
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
             {/* Logo Placeholder */}
             <View style={styles.logoContainer}>
                 <View style={styles.logo}>
-                    <Text style={styles.logoText}>LOGO</Text>
+                    <Image source={logo} style={styles.logoImage} resizeMode="contain" />
                 </View>
             </View>
             <Text style={styles.title}>Seller Registration</Text>
@@ -66,24 +67,36 @@ const RegisterScreen = () => {
                         <Field name="email" placeholder="Email" component={CustomInput} />
                         <Field name="password" placeholder="Password" secureTextEntry component={CustomInput} />
                         <Field name="confirmPassword" placeholder="Confirm Password" secureTextEntry component={CustomInput} />
-                        <Button title="Register" onPress={handleSubmit} disabled={isSubmitting} />
+                        <View style={styles.buttonContainer}>
+                            <TouchableOpacity
+                                style={styles.button}
+                                onPress={handleSubmit}
+                                disabled={isSubmitting}
+                            >
+                                <Text style={styles.buttonText}>Register</Text>
+                            </TouchableOpacity>
+                        </View>
                         {/* Added Login Message */}
                         <Text style={styles.loginText}>
-                            Already have an account? Login.
+                            Already have an account?{' '}
+                            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                                <Text style={{ color: '#2A2A2A', fontWeight: 'bold' }}>Login</Text>
+                            </TouchableOpacity>
                         </Text>
                     </>
                 )}
             </Formik>
-        </View>
+        </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
+        backgroundColor: '#f2f2f2',
+    },
+    contentContainer: {
         padding: 16,
-        backgroundColor: '#FAFAFA', // Light grayish-white for the background
     },
     title: {
         fontSize: 28,
@@ -111,18 +124,25 @@ const styles = StyleSheet.create({
         fontSize: 12,
         marginBottom: 5,
     },
+    buttonContainer: {
+        flexDirection: 'row', // added to center the buttons
+        justifyContent: 'center', // added to center the buttons
+    },
     button: {
-        backgroundColor: '#2A2A2A', // Dark Gray for primary actions
+        backgroundColor: '#2A2A2A',
         borderRadius: 8,
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 10,
-        elevation: 3, // Shadow for Android
+        marginBottom: 15, // Added a little spacing below the button
+        elevation: 3,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2, // Shadow for iOS
+        shadowOpacity: 0.2,
         shadowRadius: 2,
+        width: '48%', // added width to make the buttons touch each other
+        marginLeft: '2%', // added margin to separate the buttons
     },
     buttonText: {
         color: 'white',
@@ -140,12 +160,18 @@ const styles = StyleSheet.create({
         marginBottom: 50,
     },
     logo: {
-        width: 150,
-        height: 150,
+        width: 160, // Slightly larger
+        height: 160,
         backgroundColor: '#DDDDDD',
-        borderRadius: 75,
+        borderRadius: 80,
         justifyContent: 'center',
         alignItems: 'center',
+        overflow: 'hidden',
+    },
+    logoImage: {
+        maxWidth: '100%',
+        height: 'auto',
+        aspectRatio: 1.5,
     },
     logoText: {
         color: '#2A2A2A',

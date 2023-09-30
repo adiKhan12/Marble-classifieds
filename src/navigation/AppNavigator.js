@@ -8,6 +8,7 @@ import SellerHomeScreen from '../screens/SellerHomeScreen';
 import ProductsScreen from '../screens/ProductsScreen';
 import AddProductScreen from '../screens/AddProductScreen';
 import EditProductScreen from '../screens/EditProductScreen';
+import Logout from '../screens/LogoutScreen';
 
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -69,7 +70,12 @@ const AppNavigator = () => {
             <Stack.Screen 
                 name="SellerDashboard" 
                 component={SellerTabNavigator} 
-                options={{ headerShown: false }} 
+                options={({ navigation }) => ({ 
+                    headerShown: true,
+                    title: 'Seller Dashboard',
+                    headerRight: () => <Logout navigation={navigation} />,
+                    headerLeft: () => null
+                })} 
             />
             <Stack.Screen 
                 name="EditProductScreen" 
